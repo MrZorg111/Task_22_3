@@ -12,18 +12,20 @@ bool check (std::map<char, int>& anagram, std::string& a, std::string& b) {
             anagram.insert(std::pair<char, int> (a[i], 1));
         }
     }
-    for (int i = 0; i < b.length(); i++) {
-        for (std::map<char, int> :: iterator it = anagram.begin(); it != anagram.end(); it++) {
-            if (it -> first == b[i]) {
-                if (it -> second == 1) {
+    if (!anagram.empty()) {
+        for (int i = 0; i < b.length(); i++) {
+            std::map<char, int>::iterator it = anagram.find(b[i]);
+            if (it->first == b[i]) {
+                if (it->second == 1) {
                     anagram.erase(b[i]);
-                    break;
-                }
-                else {
-                    it -> second -= 1;
+                } else {
+                    it->second -= 1;
                 }
             }
         }
+    }
+    else {
+        std::cout << "The first word is not set!\n";
     }
 
     if (anagram.begin() == anagram.end()) {
@@ -42,7 +44,3 @@ int main() {
     std::cout << check(anagram, word_f, word_s);
     return 0;
 }
-/*for (std::map<char, int> :: iterator it = anagram.begin(); it != anagram.end(); it++) {
-std::cout << it -> first << " " << it -> second << "\n";
-}
- */
